@@ -18,7 +18,8 @@
     "fwsp-jwt-auth": "0.1.0",
     "fwsp-logger": "0.1.6",
     "fwsp-server-response": "2.2.6",
-    "hydra-express": "1.4.5"
+    "hydra-express": "1.4.5",
+    "jimp": "^0.2.27"
   },
   "devDependencies": {
     "chai": "3.5.0",
