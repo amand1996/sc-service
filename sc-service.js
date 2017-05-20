@@ -1,12 +1,13 @@
 /**
 * @name Sc
 * @summary Sc Hydra Express service entry point
-* @description 
+* @description
 */
 'use strict';
 
 const version = require('./package.json').version;
 const hydraExpress = require('hydra-express');
+var ejs = require('ejs');
 
 const jwtAuth = require('fwsp-jwt-auth');
 const HydraExpressLogger = require('fwsp-logger').HydraExpressLogger;
@@ -26,10 +27,21 @@ config.init('./config/config.json')
     return hydraExpress.init(config.getObject(), version, () => {
       const app = hydraExpress.getExpressApp();
       app.set('views', './views');
-      app.set('view engine', 'pug');
+      app.set('view engine', 'ejs');
       hydraExpress.registerRoutes({
         '/v1/sc': require('./routes/sc-v1-routes')
       });
+      app.get('/', function(req, res){
+        res.render('index');
+      });
+      app.post('/authenticate', function(req, res){
+        if(req.body.username == "aman" && req.body.password == "musicstar"){
+          res.render('dashboard');
+        }
+        else{
+          res.send("Incorrect login");
+        }
+      })
     });
   })
   .then(serviceInfo => console.log('serviceInfo', serviceInfo))

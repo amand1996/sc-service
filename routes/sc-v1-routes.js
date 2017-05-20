@@ -19,9 +19,15 @@ express.response.sendOk = function(result) {
 
 let api = express.Router();
 
-api.get('/', hydraExpress.validateJwtToken(),
-(req, res) => {
-  res.sendOk({greeting: 'Welcome to Hydra Express!'});
+api.get('/', function(req, res) {
+  //res.sendOk({greeting: 'Welcome to Hydra Express!'});
+  // res.send("Hello World");
+  res.render('index');
 });
+
+// api.get('/', hydraExpress.validateJwtToken(),
+// (req, res) => {
+//   res.sendOk({greeting: 'Welcome to Hydra Express!'});
+// });
 
 module.exports = api;
