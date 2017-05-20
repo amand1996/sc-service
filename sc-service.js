@@ -5,11 +5,11 @@
 */
 'use strict';
 
+var jsonpatch = require('jsonpatch');
 var Jimp = require('jimp');
 const version = require('./package.json').version;
 const hydraExpress = require('hydra-express');
 var ejs = require('ejs');
-var authenticated = false;
 
 const jwtAuth = require('fwsp-jwt-auth');
 const HydraExpressLogger = require('fwsp-logger').HydraExpressLogger;
@@ -33,18 +33,29 @@ config.init('./config/config.json')
       hydraExpress.registerRoutes({
         '/v1/sc': require('./routes/sc-v1-routes')
       });
+
       app.get('/', function(req, res){
         res.render('index');
       });
+
+      app.get('/jsoninput', function(req, res){
+          res.render('jsonpatchinput');
+      })
+
+      app.post('/jsonoutput', function(req, res){
+        var obj = JSON.parse(req.body.json_object);
+        var patch = JSON.parse(req.body.json_patch);
+        res.send(JSON.stringify(jsonpatch.apply_patch(obj, patch),null,2));
+      })
+
       app.get('/imageupload', function(req, res){
-        if(hydraExpress.validateJwtToken()){
-          res.render('dashboard');
-        }
-        else{
-          res.send("Please login first");
-        }
-      });
+          res.render('imageupload');
+      })
+
       app.post('/imageupload', function(req, res){
+          res.render('imageupload');
+      })
+      app.post('/dashboard', function(req, res){
         if(req.body.username == "aman" && req.body.password == "musicstar"){
           res.render('dashboard');
         }
@@ -57,7 +68,6 @@ config.init('./config/config.json')
           Jimp.read(req.body.image, function (err, image) {
               image.resize(50, 50)
                    .getBuffer(Jimp.MIME_JPEG, function(err, buffer){
-                      console.log("reached inside buffer");
                       res.setHeader('content-type', 'image/jpeg');
                       res.send(buffer);
                     })

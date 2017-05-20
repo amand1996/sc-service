@@ -29,22 +29,41 @@
     </header>
 
     <section>
-      <form id="myform" action="/imageupload" method="GET">
+      <form id="myform" action="/jsonoutput" method="POST">
         <div class="container">
             <div class="row">
               <div class="col-lg-12 wrap">
-                <button type="submit" id="submitbtn" class="btn btn-success"/>Thumbnail Generator</button>
+                <p>Submit the JSON object and JSON patch here<br></p>
+                <div class="box" style="float:left">
+                  <strong>JSON Object</strong>
+                  <div class="container-1">
+                      <textarea rows="4" cols="50" class="search" id="search1" placeholder="JSON Object..." name="json_object" style="resize: none"/>
+                        {
+                          "baz": "qux",
+                          "foo": "bar"
+                        }
+                      </textarea>
+                  </div>
+                </div><br><br><br><br><br><br><br>
+                <div class="box" style="float:left">
+                  <strong>JSON Patch</strong>
+                  <div class="container-1">
+                      <textarea rows="4" cols="50" class="search" id="search2" placeholder="JSON Patch..." name="json_patch" style="resize: none"/>
+                        [
+                          { "op": "replace", "path": "/baz", "value": "boo" },
+                          { "op": "add", "path": "/hello", "value": ["world"] },
+                          { "op": "remove", "path": "/foo"}
+                        ]
+                      </textarea>
+                  </div>
+                </div><br><br><br><br><br><br><br>
+                <button type="submit" id="submitbtn" class="btn btn-success"/>Submit</button>
+
               </div>
             </div>
-        </div>
-      </form>
-      <br>
-      <form id="myform" action="/jsoninput" method="GET">
-        <div class="container">
             <div class="row">
-              <div class="col-lg-12 wrap">
-                <button type="submit" id="submitbtn" class="btn btn-success"/>JSON Patch</button>
-              </div>
+                <div class="col-sm-4 portfolio-item">
+                </div>
             </div>
         </div>
       </form>
