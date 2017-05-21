@@ -1,13 +1,13 @@
 <%- include header.ejs %>
     <section>
-      <form id="myform" action="/imageoutput" method="POST">
+      <form id="myform" action="/v1/sc/imageoutput" method="POST">
         <div class="container">
             <div class="row">
               <div class="col-lg-12 wrap">
                 <p>Submit the image URL here<br><strong>URL:</strong></p>
                 <div class="box" style="float:left">
                   <div class="container-1">
-                      <input class="search" type="input" id="search1" placeholder="Image URL" name="image"/>
+                      <input class="search" type="input" id="search1" placeholder="Image URL" name="image" value="https://socialcops.com/images/old/spec/headers/header-sign-1200.jpg"/>
                   </div>
                 </div>
                 <button type="submit" id="submitbtn" class="btn btn-success"/>Submit</button>

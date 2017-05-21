@@ -1,42 +1,38 @@
 <%- include header.ejs %>
     <section>
-      <form id="myform" action="/jsonoutput" method="POST">
+      <form id="myform" action="/v1/sc/jsonoutput" method="POST">
         <div class="container">
             <div class="row">
-              <div class="col-lg-12 wrap">
-                <p>Submit the JSON object and JSON patch here<br></p>
+              <p>Submit the JSON object and JSON patch here<br></p>
+              <div class="col-lg-6 wrap">
                 <div class="box" style="float:left">
                   <strong>JSON Object</strong>
                   <div class="container-1">
-                      <textarea rows="4" cols="50" class="search" id="search1" placeholder="JSON Object..." name="json_object" style="resize: none"/>
+                      <textarea rows="5" cols="50" class="search" id="search1" placeholder="JSON Object..." name="json_object" style="resize: none"/>
                         {
                           "baz": "qux",
                           "foo": "bar"
                         }
                       </textarea>
                   </div>
-                </div><br><br><br><br><br><br><br>
-                <div class="box" style="float:left">
-                  <strong>JSON Patch</strong>
-                  <div class="container-1">
-                      <textarea rows="4" cols="50" class="search" id="search2" placeholder="JSON Patch..." name="json_patch" style="resize: none"/>
-                        [
-                          { "op": "replace", "path": "/baz", "value": "boo" },
-                          { "op": "add", "path": "/hello", "value": ["world"] },
-                          { "op": "remove", "path": "/foo"}
-                        ]
-                      </textarea>
-                  </div>
-                </div><br><br><br><br><br><br><br>
-                <button type="submit" id="submitbtn" class="btn btn-success"/>Submit</button>
-
               </div>
             </div>
-            <div class="row">
-                <div class="col-sm-4 portfolio-item">
+            <div class="col-lg-6 wrap">
+              <div class="box" style="float:left">
+                <strong>JSON Patch</strong>
+                <div class="container-1">
+                    <textarea rows="5" cols="50" class="search" id="search2" placeholder="JSON Patch..." name="json_patch" style="resize: none"/>
+                      [
+                        { "op": "replace", "path": "/baz", "value": "boo" },
+                        { "op": "add", "path": "/hello", "value": ["world"] },
+                        { "op": "remove", "path": "/foo"}
+                      ]
+                    </textarea>
                 </div>
+              </div><br><br><br><br><br><br><br><br>
             </div>
         </div>
+        <button type="submit" id="submitbtn" class="btn btn-success"/>Submit</button>
       </form>
     </section>
 <%- include footer.ejs %>

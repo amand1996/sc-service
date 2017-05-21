@@ -19,8 +19,11 @@
     "fwsp-logger": "0.1.6",
     "fwsp-server-response": "2.2.6",
     "hydra-express": "1.4.5",
+    "hydra-express-plugin-jwt-auth": "0.0.2",
     "jimp": "^0.2.27",
-    "jsonpatch": "^3.0.1"
+    "jsdoc": "^3.4.3",
+    "jsonpatch": "^3.0.1",
+    "jsonwebtoken": "^7.4.1"
   },
   "devDependencies": {
     "chai": "3.5.0",

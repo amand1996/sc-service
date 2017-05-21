@@ -1,3 +1,8 @@
+/**
+* @name Sc docker.js
+* @summary Dockerfile config
+* @description Node.js task
+*/
 const config = require('fwsp-config'),
   fs = require('fs'),
   spawn = require('child_process').spawn,
