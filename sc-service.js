@@ -36,7 +36,7 @@ config.init('./config/config.json')
         '/v1/sc': require('./routes/sc-v1-routes')
       });
 
-      app.get('/', function(req, res){
+      app.get('/', function(req, res) {
         res.render('index');
       });
     });
