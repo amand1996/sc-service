@@ -37,7 +37,7 @@ api.get('/imageupload', function(req, res) {
   jwt.verify(token, 'secret', function(err, decoded) {
     if (err) {
       hydraExpress.log('error', err);
-      res.send('Please login');
+      res.status(401).send('Please login');
     }
     else {
       hydraExpress.log('info', 'Cookie verified');
@@ -51,7 +51,7 @@ api.post('/imageoutput', function(req, res) {
   jwt.verify(token, 'secret', function(err, decoded) {
     if (err) {
       hydraExpress.log('error', err);
-      res.send('Please login');
+      res.status(401).send('Please login');
     }
     else {
       hydraExpress.log('info', 'Cookie verified');
@@ -91,7 +91,7 @@ api.get('/jsoninput', function(req, res) {
   jwt.verify(token, 'secret', function(err, decoded) {
     if (err) {
       hydraExpress.log('error', err);
-      res.send('Please login');
+      res.status(401).send('Please login');
     }
     else {
       hydraExpress.log('info', 'Cookie verified');
@@ -105,7 +105,7 @@ api.post('/jsonoutput', function(req, res) {
   jwt.verify(token, 'secret', function(err, decoded) {
     if (err) {
       hydraExpress.log('error', err);
-      res.send('Please login');
+      res.status(401).send('Please login');
     }
     else {
       hydraExpress.log('info', 'Cookie verified');
@@ -147,7 +147,7 @@ api.get('/dashboard', function(req, res) {
   jwt.verify(token, 'secret', function(err, decoded) {
     if (err) {
       hydraExpress.log('error', err);
-      res.send('Please login');
+      res.status(401).send('Please login');
     }
     else {
       hydraExpress.log('info', 'Cookie verified');

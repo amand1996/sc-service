@@ -5,7 +5,7 @@
 ## Pre-installation
 
 It's recommended that [NVM](https://github.com/creationix/nvm) be used to manage NodeJS versions.
-The project includes an .nvmrc which specifies NodeJS 6.2.1
+The project includes an .nvmrc which specifies NodeJS 6.2.1.
 
 ## Installation
 
@@ -64,8 +64,13 @@ HydraExpressLogger has been used for logging the requests. It has been implement
 
 ## Tests
 
-Mocha has been used for testing.
+Mocha has been used for testing. Testing code can be found in 'specs/test.js'.
+First start the server using
 ```shell
-$ npm install mocha -g
+$ npm start
+```
+Then run the tests using
+```shell
 $ npm test
 ```
+[Istanbul](https://github.com/gotwarlost/istanbul) has been used for mocha test code coverage. The results are stored in the 'coverage' folder.
