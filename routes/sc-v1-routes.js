@@ -7,9 +7,13 @@
 const hydraExpress = require('hydra-express');
 const hydra = hydraExpress.getHydra();
 const express = hydraExpress.getExpress();
-const jwtAuth = require('fwsp-jwt-auth');
 var jsonpatch = require('jsonpatch');
 var Jimp = require('jimp');
+var jwt = require('jsonwebtoken');
+const payload = {
+  userID: "aman",
+  admin: true
+};
 
 const ServerResponse = require('fwsp-server-response');
 
@@ -29,31 +33,49 @@ let api = express.Router();
 */
 
 api.get('/imageupload', function(req, res){
-    res.render('imageupload');
+  var token = req.cookies['cookie-token'];
+  jwt.verify(token, 'secret', function(err, decoded) {
+    if(err){
+      console.log(err);
+      res.send("Please login");
+    }
+    else{
+      res.render('imageupload');
+    }
+  });
 })
 
 api.post('/imageoutput', function(req, res){
-  if(req.body.image.trim() != ""){
-    Jimp.read(req.body.image, function (err, image) {
-      if(err){
-        res.send(err);
+  var token = req.cookies['cookie-token'];
+  jwt.verify(token, 'secret', function(err, decoded) {
+    if(err){
+      console.log(err);
+      res.send("Please login");
+    }
+    else{
+      if(req.body.image.trim() != ""){
+        Jimp.read(req.body.image, function (err, image) {
+          if(err){
+            res.send(err);
+          }
+          else{
+            image.resize(50, 50)
+             .getBuffer(Jimp.MIME_JPEG, function(err, buffer){
+               if(err){
+                 console.log(err);
+                 res.send(err);
+               }
+                res.setHeader('content-type', 'image/jpeg');
+                res.send(buffer);
+              })
+          }
+        });
       }
       else{
-        image.resize(50, 50)
-         .getBuffer(Jimp.MIME_JPEG, function(err, buffer){
-           if(err){
-             res.send(err);
-           }
-            res.setHeader('content-type', 'image/jpeg');
-
-            res.send(buffer);
-          })
+        res.send("Incorrect data");
       }
-    });
-  }
-  else{
-    res.send("Incorrect data");
-  }
+    }
+  });
 })
 
 /**
@@ -62,13 +84,31 @@ api.post('/imageoutput', function(req, res){
 */
 
 api.get('/jsoninput', function(req, res){
-    res.render('jsonpatchinput');
+  var token = req.cookies['cookie-token'];
+  jwt.verify(token, 'secret', function(err, decoded) {
+    if(err){
+      console.log(err);
+      res.send("Please login");
+    }
+    else{
+      res.render('jsonpatchinput');
+    }
+  });
 })
 
 api.post('/jsonoutput', function(req, res){
-  var obj = JSON.parse(req.body.json_object);
-  var patch = JSON.parse(req.body.json_patch);
-  res.send(JSON.stringify(jsonpatch.apply_patch(obj, patch),null,2));
+  var token = req.cookies['cookie-token'];
+  jwt.verify(token, 'secret', function(err, decoded) {
+    if(err){
+      console.log(err);
+      res.send("Please login");
+    }
+    else{
+      var obj = JSON.parse(req.body.json_object);
+      var patch = JSON.parse(req.body.json_patch);
+      res.send(JSON.stringify(jsonpatch.apply_patch(obj, patch),null,2));
+    }
+  });
 })
 
 /**
@@ -78,7 +118,15 @@ api.post('/jsonoutput', function(req, res){
 
 api.post('/dashboard', function(req, res){
   if(req.body.username == "aman" && req.body.password == "musicstar"){
-    res.render('dashboard');
+    var token = jwt.sign(payload, 'secret', { expiresIn: 60 * 60 }, function(err, token){
+      console.log(err);
+      function getToken(){
+        return token;
+      }
+      res.cookie('cookie-token', getToken())
+      res.render('dashboard');
+    })
+
   }
   else{
     res.send("Incorrect login");
@@ -86,12 +134,27 @@ api.post('/dashboard', function(req, res){
 })
 
 api.get('/dashboard', function(req, res){
-    res.render('dashboard');
-})
+  var token = req.cookies['cookie-token'];
+  jwt.verify(token, 'secret', function(err, decoded) {
+    if(err){
+      console.log(err);
+      res.send("Please login");
+    }
+    else{
+      console.log("Authentication Successful");
+      res.render('dashboard');
+    }
+  });
+});
 
-// api.get('/', hydraExpress.validateJwtToken(),
-// (req, res) => {
-//   res.sendOk({greeting: 'Welcome to Hydra Express!'});
-// });
+/**
+* @name JSON Web Token Deletion API
+* @description This api is deletes the JSON Web Token from the cookie.
+*/
+
+api.get('/deletetoken', function(req, res){
+  res.clearCookie('cookie-token');
+  res.render('index');
+})
 
 module.exports = api;

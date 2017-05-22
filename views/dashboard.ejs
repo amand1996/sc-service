@@ -1,6 +1,6 @@
 <%- include header.ejs %>
     <section>
-      <form id="myform" action="/v1/sc/imageupload" method="GET">
+      <form id="imageUploadGet" action="/v1/sc/imageupload" method="GET">
         <div class="container">
             <div class="row">
               <div class="col-lg-12 wrap">
@@ -10,7 +10,7 @@
         </div>
       </form>
       <br>
-      <form id="myform" action="/v1/sc/jsoninput" method="GET">
+      <form id="jsonInputGet" action="/v1/sc/jsoninput" method="GET">
         <div class="container">
             <div class="row">
               <div class="col-lg-12 wrap">
@@ -20,4 +20,16 @@
         </div>
       </form>
     </section>
+    <section>
+    <form id="deleteTokenGet" action="/v1/sc/deletetoken" method="GET">
+      <div class="container">
+          <div class="row">
+            <div class="col-lg-12 wrap">
+              <p><strong>Delete the JWT token?</strong></p>
+              <button type="submit" id="submitbtn" class="btn btn-success"/>Delete</button>
+            </div>
+          </div>
+      </div>
+    </form>
+  </section>
 <%- include footer.ejs %>

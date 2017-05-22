@@ -1,6 +1,8 @@
 {
   "environment": "development",
-"jwtPublicCert": "./config/service.pub",  "hydra": {
+"jwtPublicCert": "./config/service.pub",
+"jwtPrivateCert": "./config/server.pem",
+"hydra": {
     "serviceName": "sc-service",
     "serviceIP": "",
     "servicePort": "3000",

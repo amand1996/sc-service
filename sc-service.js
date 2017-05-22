@@ -12,6 +12,7 @@ var ejs = require('ejs');
 const jwtAuth = require('fwsp-jwt-auth');
 const HydraExpressLogger = require('fwsp-logger').HydraExpressLogger;
 hydraExpress.use(new HydraExpressLogger());
+var cookieParser = require('cookie-parser');
 
 let config = require('fwsp-config');
 
@@ -22,12 +23,13 @@ let config = require('fwsp-config');
 config.init('./config/config.json')
   .then(() => {
     config.version = version;
-    return jwtAuth.loadCerts(null, config.jwtPublicCert);
+    return jwtAuth.loadCerts(config.jwtPrivateCert, config.jwtPublicCert);
   })
   .then(status => {
     return hydraExpress.init(config.getObject(), version, () => {
       const app = hydraExpress.getExpressApp();
       app.set('views', './views');
+      app.use(cookieParser());
       app.set('view engine', 'ejs');
 
       hydraExpress.registerRoutes({

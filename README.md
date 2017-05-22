@@ -12,6 +12,7 @@ The project includes an .nvmrc which specifies NodeJS 6.2.1
 ```javascript
 $ cd sc-service
 $ nvm use
+$ npm install
 ```
 
 ## Trial
@@ -29,7 +30,7 @@ The main functionlities of this module are:
 
 ## Authentication
 
-A username password pair is required to login into the module. It returns a signed [Json Web Token](https://jwt.io/​) which can be used to validate future requests.
+A username password pair is required to login into the module. It returns a signed [Json Web Token](https://jwt.io​) which can be used to validate future requests. The JWT payload token is stored in cookie. The JWT in the cookie is verified each time a request is sent in post login.
 ![Screenshot](https://github.com/amand1996/sc-service/blob/master/login.png)
 ![Screenshot](https://github.com/amand1996/sc-service/blob/master/dashboard.png)
 
@@ -60,3 +61,11 @@ HydraExpressLogger has been used for logging the requests. It has been implement
 ## JS Linting
 
 'eslint' has been used for javascript linting to produce clean code.
+
+## Tests
+
+Mocha has been used for testing.
+```shell
+$ npm install mocha -g
+$ npm test
+```
