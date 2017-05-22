@@ -36,23 +36,25 @@ api.get('/imageupload', function(req, res){
   var token = req.cookies['cookie-token'];
   jwt.verify(token, 'secret', function(err, decoded) {
     if(err){
-      console.log(err);
+      hydraExpress.log('error', err);
       res.send("Please login");
     }
     else{
+      hydraExpress.log('info', "Cookie verified");
       res.render('imageupload');
     }
   });
-})
+});
 
 api.post('/imageoutput', function(req, res){
   var token = req.cookies['cookie-token'];
   jwt.verify(token, 'secret', function(err, decoded) {
     if(err){
-      console.log(err);
+      hydraExpress.log('error', err);
       res.send("Please login");
     }
     else{
+      hydraExpress.log('info', "Cookie verified");
       if(req.body.image.trim() != ""){
         Jimp.read(req.body.image, function (err, image) {
           if(err){
@@ -62,7 +64,7 @@ api.post('/imageoutput', function(req, res){
             image.resize(50, 50)
              .getBuffer(Jimp.MIME_JPEG, function(err, buffer){
                if(err){
-                 console.log(err);
+                 hydraExpress.log('error', err);
                  res.send(err);
                }
                 res.setHeader('content-type', 'image/jpeg');
@@ -72,11 +74,12 @@ api.post('/imageoutput', function(req, res){
         });
       }
       else{
+        hydraExpress.log('error', "Incorrect data");
         res.send("Incorrect data");
       }
     }
   });
-})
+});
 
 /**
 * @name JSON patch API
@@ -87,29 +90,31 @@ api.get('/jsoninput', function(req, res){
   var token = req.cookies['cookie-token'];
   jwt.verify(token, 'secret', function(err, decoded) {
     if(err){
-      console.log(err);
+      hydraExpress.log('error', err);
       res.send("Please login");
     }
     else{
+      hydraExpress.log('info', "Cookie verified");
       res.render('jsonpatchinput');
     }
   });
-})
+});
 
 api.post('/jsonoutput', function(req, res){
   var token = req.cookies['cookie-token'];
   jwt.verify(token, 'secret', function(err, decoded) {
     if(err){
-      console.log(err);
+      hydraExpress.log('error', err);
       res.send("Please login");
     }
     else{
+      hydraExpress.log('info', "Cookie verified");
       var obj = JSON.parse(req.body.json_object);
       var patch = JSON.parse(req.body.json_patch);
       res.send(JSON.stringify(jsonpatch.apply_patch(obj, patch),null,2));
     }
   });
-})
+});
 
 /**
 * @name Authentication and dashboard rendering API
@@ -118,30 +123,34 @@ api.post('/jsonoutput', function(req, res){
 
 api.post('/dashboard', function(req, res){
   if(req.body.username == "aman" && req.body.password == "musicstar"){
+    hydraExpress.log('info', "Authentication Successful");
     var token = jwt.sign(payload, 'secret', { expiresIn: 60 * 60 }, function(err, token){
-      console.log(err);
+      if(err){
+        hydraExpress.log('error', err);
+        res.send("Error");
+      }
       function getToken(){
         return token;
       }
       res.cookie('cookie-token', getToken())
       res.render('dashboard');
-    })
-
+    });
   }
   else{
+    hydraExpress.log('error', "Authentication failed");
     res.send("Incorrect login");
   }
-})
+});
 
 api.get('/dashboard', function(req, res){
   var token = req.cookies['cookie-token'];
   jwt.verify(token, 'secret', function(err, decoded) {
     if(err){
-      console.log(err);
+      hydraExpress.log('error', err);
       res.send("Please login");
     }
     else{
-      console.log("Authentication Successful");
+      hydraExpress.log('info', "Cookie verified");
       res.render('dashboard');
     }
   });
@@ -153,8 +162,9 @@ api.get('/dashboard', function(req, res){
 */
 
 api.get('/deletetoken', function(req, res){
+  hydraExpress.log('info', "Token deleted");
   res.clearCookie('cookie-token');
   res.render('index');
-})
+});
 
 module.exports = api;
