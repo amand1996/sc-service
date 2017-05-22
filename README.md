@@ -30,7 +30,7 @@ The main functionlities of this module are:
 
 ## Authentication
 
-A username password pair is required to login into the module. It returns a signed [Json Web Token](https://jwt.io​) which can be used to validate future requests. The JWT payload token is stored in cookie. The JWT in the cookie is verified each time a request is sent in post login.
+A username password pair is required to login into the module. It returns a signed [Json Web Token](https://jwt.io​) which can be used to validate future requests. The JWT payload token is stored in cookie. The JWT in the cookie is verified each time a request is sent in post login. We can logout of the application at anytime by deleting the jwt cookie (by clicking the Delete cookie button in post login).
 ![Screenshot](https://github.com/amand1996/sc-service/blob/master/login.png)
 ![Screenshot](https://github.com/amand1996/sc-service/blob/master/dashboard.png)
 
